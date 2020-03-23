@@ -75,6 +75,7 @@ homeassistant/components/coolmaster/* @OnFreund
 homeassistant/components/coronavirus/* @home_assistant/core
 homeassistant/components/counter/* @fabaff
 homeassistant/components/cover/* @home-assistant/core
+homeassistant/components/cozytouch/* @biker91620
 homeassistant/components/cpuspeed/* @fabaff
 homeassistant/components/cups/* @fabaff
 homeassistant/components/daikin/* @fredrike @rofrantz

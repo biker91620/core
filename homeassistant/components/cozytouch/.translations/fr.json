@@ -1,0 +1,22 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Cet équipement est déja configurée"
+        },
+        "error": {
+            "cannot_connect": "Impossible de se connecter, veuillez réessayer",
+            "invalid_auth": "Authentification non valide",
+            "unknown": "Erreur inattendue"
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "username": "Utilsateur",
+                    "password": "Mot de passe"
+                },
+                "title": "Se connecter à l'appareil"
+            }
+        },
+        "title": "CozyTouch"
+    }
+}
