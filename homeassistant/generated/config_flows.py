@@ -20,6 +20,7 @@ FLOWS = [
     "cert_expiry",
     "coolmaster",
     "coronavirus",
+    "cozytouch",
     "daikin",
     "deconz",
     "dialogflow",
