@@ -1,0 +1,14 @@
+{
+  "domain": "tic",
+  "name": "T\u00e9l\u00e9info",
+  "config_flow": true,
+  "documentation": "https://www.home-assistant.io/integrations/tic",
+  "requirements": ["pyticcom==1.1"],
+  "ssdp": [],
+  "zeroconf": [],
+  "homekit": {},
+  "dependencies": [],
+  "codeowners": [
+    "@biker91620"
+  ]
+}

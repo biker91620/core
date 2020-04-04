@@ -109,6 +109,7 @@ FLOWS = [
     "starline",
     "tellduslive",
     "tesla",
+    "tic",
     "toon",
     "tplink",
     "traccar",
