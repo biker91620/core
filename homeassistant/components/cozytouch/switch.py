@@ -6,7 +6,7 @@ from .const import DOMAIN, LOGGER
 
 
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
-    """Old way of setting up deCONZ platforms."""
+    """Old way of setting up Cozytouch platforms."""
 
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
@@ -61,5 +61,5 @@ class CozytouchSwitch(DeviceInfo, SwitchDevice):
 
     async def async_device_update(self, warning=True):
         """Fetch new state data for this heater."""
-        LOGGER.info("Update switch {name}".format(name=self.name))
+        LOGGER.debug("Update switch {name}".format(name=self.name))
         await self.heater.async_update()

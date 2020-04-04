@@ -6,7 +6,7 @@ from .const import DOMAIN, LOGGER
 
 
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
-    """Old way of setting up deCONZ platforms."""
+    """Old way of setting up Cozytouch platforms."""
 
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
@@ -22,7 +22,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
         elif sensor.widget == DeviceType.CONTACT:
             entities.append(CozytouchContactSensor(sensor))
 
-    LOGGER.info("Found {count} binary sensors".format(count=len(entities)))
+    LOGGER.debug("Found {count} binary sensors".format(count=len(entities)))
 
     async_add_entities(entities, True)
 
@@ -54,7 +54,7 @@ class CozytouchOccupancySensor(DeviceInfo, BinarySensorDevice):
 
     async def async_device_update(self, warning=True):
         """Fetch new state data for this sensor."""
-        LOGGER.info("Update binary sensor {name}".format(name=self.name))
+        LOGGER.debug("Update binary sensor {name}".format(name=self.name))
         await self.sensor.async_update()
 
 
@@ -85,5 +85,5 @@ class CozytouchContactSensor(DeviceInfo, BinarySensorDevice):
 
     async def async_device_update(self, warning=True):
         """Fetch new state data for this sensor."""
-        LOGGER.info("Update binary sensor {name}".format(name=self.name))
+        LOGGER.debug("Update binary sensor {name}".format(name=self.name))
         await self.sensor.async_update()

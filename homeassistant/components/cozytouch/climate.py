@@ -8,7 +8,7 @@ from .const import DOMAIN, LOGGER
 
 
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
-    """Old way of setting up deCONZ platforms."""
+    """Old way of setting up Cozytouch platforms."""
 
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
@@ -22,7 +22,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
         if heater.widget == DeviceType.HEATER:
             entities.append(StandaloneCozytouchThermostat(heater))
 
-    LOGGER.info("Found {count} heaters".format(count=len(entities)))
+    LOGGER.debug("Found {count} heaters".format(count=len(entities)))
 
     async_add_entities(entities, True)
 
@@ -156,14 +156,14 @@ class StandaloneCozytouchThermostat(DeviceInfo, climate.ClimateDevice):
         """Set new target temperature."""
         if const.ATTR_TARGET_TEMP_HIGH in kwargs:
             self.heater.set_comfort_temperature(kwargs[const.ATTR_TARGET_TEMP_HIGH])
-            LOGGER.info(
+            LOGGER.debug(
                 "Set HIGH TEMP to {temp}".format(
                     temp=kwargs[const.ATTR_TARGET_TEMP_HIGH]
                 )
             )
         if const.ATTR_TARGET_TEMP_LOW in kwargs:
             self.heater.set_eco_temperature(kwargs[const.ATTR_TARGET_TEMP_LOW])
-            LOGGER.info(
+            LOGGER.debug(
                 "Set LOW TEMP to {temp}".format(temp=kwargs[const.ATTR_TARGET_TEMP_LOW])
             )
 
@@ -193,5 +193,5 @@ class StandaloneCozytouchThermostat(DeviceInfo, climate.ClimateDevice):
 
     async def async_device_update(self, warning=True):
         """Fetch new state data for this sensor."""
-        LOGGER.info("Update thermostat {name}".format(name=self.name))
+        LOGGER.debug("Update thermostat {name}".format(name=self.name))
         await self.heater.async_update()

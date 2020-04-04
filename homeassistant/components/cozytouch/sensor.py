@@ -7,7 +7,7 @@ from .const import DOMAIN, KW_UNIT, LOGGER
 
 
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
-    """Old way of setting up deCONZ platforms."""
+    """Old way of setting up Cozytouch platforms."""
 
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
@@ -24,7 +24,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
             elif sensor.widget == DeviceType.ELECTRICITY:
                 entities.append(CozyTouchElectricitySensor(sensor))
 
-    LOGGER.info("Found {count} sensors".format(count=len(entities)))
+    LOGGER.debug("Found {count} sensors".format(count=len(entities)))
 
     async_add_entities(entities, True)
 
@@ -59,7 +59,7 @@ class CozyTouchTemperatureSensor(DeviceInfo, Entity):
 
     async def async_device_update(self, warning=True):
         """Fetch new state data for this sensor."""
-        LOGGER.info("Update sensor {name}".format(name=self.name))
+        LOGGER.debug("Update sensor {name}".format(name=self.name))
         await self.sensor.async_update()
 
 
@@ -98,5 +98,5 @@ class CozyTouchElectricitySensor(DeviceInfo, Entity):
 
     async def async_device_update(self, warning=True):
         """Fetch new state data for this sensor."""
-        LOGGER.info("Update sensor {name}".format(name=self.name))
+        LOGGER.debug("Update sensor {name}".format(name=self.name))
         await self.sensor.async_update()
