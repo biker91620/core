@@ -14,20 +14,21 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     from pyticcom import UNIT_NONE
     from pyticcom.scanner import ComScanner
 
-    entities = []
     device = config_entry.data.get(CONF_DEVICE)
     scanner = ComScanner()
     coordinator = hass.data[DOMAIN][config_entry.unique_id]
     frame = coordinator.data
-    for group in frame.groups:
-        if group.info.unit != UNIT_NONE:
-            entities.append(
-                TeleinfoSensor(
-                    coordinator, device=device, info=group.info, scanner=scanner
+    if frame is not None:
+        entities = []
+        for group in frame.groups:
+            if group.info.unit != UNIT_NONE:
+                entities.append(
+                    TeleinfoSensor(
+                        coordinator, device=device, info=group.info, scanner=scanner
+                    )
                 )
-            )
 
-    async_add_entities(entities, True)
+        async_add_entities(entities, True)
 
 
 class TeleinfoSensor(Entity):
