@@ -12,7 +12,7 @@ DATA_SCHEMA = vol.Schema({CONF_DEVICE: str})
 async def validate_input(hass: core.HomeAssistant, data):
     """Validate the user input allows us to read teleinfo frame."""
 
-    from ticpy import Teleinfo
+    from pyticcom import Teleinfo
 
     try:
         with Teleinfo(data[CONF_DEVICE]) as tic:
