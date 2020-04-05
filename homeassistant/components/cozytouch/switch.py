@@ -51,13 +51,13 @@ class CozytouchSwitch(DeviceInfo, SwitchDevice):
         """Return the device class."""
         return "heat"
 
-    def turn_on(self, **kwargs) -> None:
+    async def async_turn_on(self, **kwargs):
         """Turn the entity on."""
-        self.heater.turn_on()
+        await self.heater.async_turn_on()
 
-    def turn_off(self, **kwargs):
+    async def async_turn_off(self, **kwargs):
         """Turn the entity off."""
-        self.heater.turn_off()
+        await self.heater.async_turn_off()
 
     async def async_device_update(self, warning=True):
         """Fetch new state data for this heater."""

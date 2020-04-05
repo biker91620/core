@@ -144,52 +144,60 @@ class StandaloneCozytouchThermostat(DeviceInfo, climate.ClimateDevice):
         """Return a list of available preset modes."""
         return self._preset_modes
 
-    def turn_away_mode_on(self):
+    async def async_turn_off(self) -> None:
         """Turn away on."""
-        self.heater.turn_away_mode_on()
+        await self.heater.async_turn_away_mode_off()
 
-    def turn_away_mode_off(self):
+    async def async_turn_on(self) -> None:
         """Turn away off."""
-        self.heater.turn_away_mode_off()
+        await self.heater.async_turn_away_mode_on()
 
-    def set_temperature(self, **kwargs):
+    async def async_set_temperature(self, **kwargs) -> None:
         """Set new target temperature."""
         if const.ATTR_TARGET_TEMP_HIGH in kwargs:
-            self.heater.set_comfort_temperature(kwargs[const.ATTR_TARGET_TEMP_HIGH])
+            await self.heater.async_set_comfort_temperature(
+                kwargs[const.ATTR_TARGET_TEMP_HIGH]
+            )
             LOGGER.debug(
                 "Set HIGH TEMP to {temp}".format(
                     temp=kwargs[const.ATTR_TARGET_TEMP_HIGH]
                 )
             )
         if const.ATTR_TARGET_TEMP_LOW in kwargs:
-            self.heater.set_eco_temperature(kwargs[const.ATTR_TARGET_TEMP_LOW])
+            await self.heater.async_set_eco_temperature(
+                kwargs[const.ATTR_TARGET_TEMP_LOW]
+            )
             LOGGER.debug(
                 "Set LOW TEMP to {temp}".format(temp=kwargs[const.ATTR_TARGET_TEMP_LOW])
             )
 
-    def set_hvac_mode(self, hvac_mode: str) -> None:
+    async def async_set_hvac_mode(self, hvac_mode: str) -> None:
         """Set new target hvac mode. HVAC_MODE_AUTO, HVAC_MODE_HEAT, HVAC_MODE_OFF."""
         from cozypy.constant import OperatingModeState
 
         if hvac_mode == const.HVAC_MODE_OFF:
-            self.heater.set_operating_mode(OperatingModeState.STANDBY)
+            await self.heater.async_set_operating_mode(OperatingModeState.STANDBY)
         elif hvac_mode == const.HVAC_MODE_HEAT:
-            self.heater.set_operating_mode(OperatingModeState.BASIC)
+            await self.heater.async_set_operating_mode(OperatingModeState.BASIC)
         elif hvac_mode == const.HVAC_MODE_AUTO:
-            self.heater.set_operating_mode(OperatingModeState.INTERNAL)
+            await self.heater.async_set_operating_mode(OperatingModeState.INTERNAL)
 
-    def set_preset_mode(self, preset_mode: str) -> None:
+    async def async_set_preset_mode(self, preset_mode: str) -> None:
         """Set new preset mode. PRESET_ECO, PRESET_COMFORT."""
         from cozypy.constant import TargetingHeatingLevelState
 
         if preset_mode == const.PRESET_SLEEP:
-            self.heater.set_targeting_heating_level(
+            await self.heater.async_set_targeting_heating_level(
                 TargetingHeatingLevelState.FROST_PROTECTION
             )
         elif preset_mode == const.PRESET_ECO:
-            self.heater.set_targeting_heating_level(TargetingHeatingLevelState.ECO)
+            await self.heater.async_set_targeting_heating_level(
+                TargetingHeatingLevelState.ECO
+            )
         elif preset_mode == const.PRESET_COMFORT:
-            self.heater.set_targeting_heating_level(TargetingHeatingLevelState.COMFORT)
+            await self.heater.async_set_targeting_heating_level(
+                TargetingHeatingLevelState.COMFORT
+            )
 
     async def async_device_update(self, warning=True):
         """Fetch new state data for this sensor."""

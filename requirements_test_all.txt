@@ -159,7 +159,7 @@ construct==2.9.45
 coronavirus==1.1.0
 
 # homeassistant.components.cozytouch
-cozypy==1.2.1
+cozypy==1.2.2
 
 # homeassistant.scripts.credstash
 # credstash==1.15.0
