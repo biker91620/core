@@ -1,0 +1,22 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Cette intégration est déjà configurée"
+        },
+        "error": {
+            "cannot_connect": "Impossible de se connecter, veuillez réessayer",
+            "invalid_auth": "Authentification non valide",
+            "unknown": "Erreur inattendue"
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "username": "Utilisateur",
+                    "password": "Mot de passe"
+                },
+                "title": "Connection au service Cozytouch"
+            }
+        },
+        "title": "Cozytouch"
+    }
+}
