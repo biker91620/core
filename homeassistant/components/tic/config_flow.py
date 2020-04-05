@@ -11,7 +11,6 @@ DATA_SCHEMA = vol.Schema({CONF_DEVICE: str})
 
 async def validate_input(hass: core.HomeAssistant, data):
     """Validate the user input allows us to read teleinfo frame."""
-
     from pyticcom import Teleinfo
 
     try:
@@ -27,7 +26,9 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Téléinfo."""
 
     VERSION = 1
-    CONNECTION_CLASS = config_entries.CONN_CLASS_UNKNOWN
+    CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_POLL
+
+    _options = None
 
     async def async_step_user(self, user_input=None):
         """Handle the initial step."""
@@ -42,8 +43,24 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 LOGGER.exception("Unexpected exception")
                 errors["base"] = "unknown"
 
+        if self._options is None:
+            from pyticcom.scanner import ComScanner
+
+            scanner = ComScanner()
+            serials = scanner.scan()
+            self._options = {}
+            for idx, serial in enumerate(serials):
+                name = serial.device
+                if serial.name is not None:
+                    name = "{device} ({name})".format(
+                        device=serial.device, name=serial.name
+                    )
+                self._options[serial.device] = name
+
         return self.async_show_form(
-            step_id="user", data_schema=DATA_SCHEMA, errors=errors
+            step_id="user",
+            data_schema=vol.Schema({vol.Required(CONF_DEVICE): vol.In(self._options)}),
+            errors=errors,
         )
 
 
