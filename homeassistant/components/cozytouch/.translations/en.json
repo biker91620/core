@@ -11,9 +11,10 @@
         "step": {
             "user": {
                 "data": {
-                    "host": "Host"
+                    "username": "Username",
+                    "password": "Password"
                 },
-                "title": "Connect to the device"
+                "title": "Connection to the Cozytouch service"
             }
         },
         "title": "Cozytouch"
