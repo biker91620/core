@@ -24,11 +24,6 @@ async def validate_input(hass: core.HomeAssistant, data):
     except CozytouchException:
         raise InvalidAuth
 
-    # If you cannot connect:
-    # throw CannotConnect
-    # If the authentication is wrong:
-    # InvalidAuth
-
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for CozyTouch."""
