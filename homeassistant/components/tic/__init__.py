@@ -4,6 +4,7 @@ import asyncio
 import voluptuous as vol
 
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import CONF_DEVICE
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
@@ -35,13 +36,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     async def async_update_data():
         """Fetch data from API endpoint."""
         try:
-            # with open('/Users/Snake/Dev/Perso/core/homeassistant/components/tic/serial.dat', 'r') as serial:
-            #     def readline():
-            #         line = serial.readline()
-            #         return line.replace('\r', '').replace('\n', '')
-            #     teleinfo = Teleinfo()
-            #     teleinfo._readline = readline
-            with Teleinfo(port="/dev/cu.usbserial-DA4Y56SG") as teleinfo:
+            with Teleinfo(port=entry.data[CONF_DEVICE]) as teleinfo:
                 return teleinfo.read_frame()
 
         except Exception as err:
