@@ -1694,7 +1694,7 @@ python_opendata_transport==0.2.1
 pythonegardia==1.0.40
 
 # homeassistant.components.tic
-pyticcom==1.1
+pyticcom==1.2
 
 # homeassistant.components.tile
 pytile==3.0.1

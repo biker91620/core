@@ -1,0 +1,20 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "L'intégration est déjà configuré"
+        },
+        "error": {
+            "unknown": "Erreur inattendue"
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "device": "Port serie",
+                    "scan_interval": "Intervalle de balayage"
+                },
+                "title": "Se connecter à l'appareil"
+            }
+        },
+        "title": "T\u00e9l\u00e9info"
+    }
+}

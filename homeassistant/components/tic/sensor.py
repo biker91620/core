@@ -17,6 +17,8 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     device = config_entry.data.get(CONF_DEVICE)
     scanner = ComScanner()
     coordinator = hass.data[DOMAIN][config_entry.unique_id]
+    if coordinator.data is None:
+        raise IOError("Unable to load coordinator")
     frame = coordinator.data
     if frame is not None:
         entities = []
@@ -40,6 +42,7 @@ class TeleinfoSensor(Entity):
         self._device = device
         self._info = info
         self._scanner = scanner
+        self._state = STATE_UNKNOWN
 
     @property
     def unique_id(self):
@@ -60,10 +63,9 @@ class TeleinfoSensor(Entity):
     def state(self):
         """Return the electricity consumption."""
         group = self._coordinator.data.get(self._info)
-        if group is None:
-            return STATE_UNKNOWN
-        state = int(group.value)
-        return state
+        if group is not None:
+            self._state = int(group.value)
+        return self._state
 
     @property
     def unit_of_measurement(self):

@@ -2,9 +2,9 @@
 import voluptuous as vol
 
 from homeassistant import config_entries, core, exceptions
-from homeassistant.const import CONF_DEVICE
+from homeassistant.const import CONF_DEVICE, CONF_SCAN_INTERVAL
 
-from .const import DOMAIN, LOGGER
+from .const import DEFAULT_SCAN_INTERVAL, DOMAIN, LOGGER
 
 DATA_SCHEMA = vol.Schema({CONF_DEVICE: str})
 
@@ -15,9 +15,9 @@ async def validate_input(hass: core.HomeAssistant, data):
 
     try:
         with Teleinfo(data[CONF_DEVICE]) as tic:
-            tic.read_frame()
+            await tic.read_frame()
     except Exception as e:
-        raise BadDevice(str(e))
+        raise InvalidSerialDevice(str(e))
 
     return True
 
@@ -50,19 +50,26 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             serials = scanner.scan()
             self._options = {}
             for idx, serial in enumerate(serials):
-                name = serial.device
-                if serial.name is not None:
-                    name = "{device} ({name})".format(
-                        device=serial.device, name=serial.name
+                option = serial.device
+                if serial.product is not None:
+                    option = "{device} ({product})".format(
+                        device=serial.device, product=serial.product
                     )
-                self._options[serial.device] = name
+                self._options[serial.device] = option
 
         return self.async_show_form(
             step_id="user",
-            data_schema=vol.Schema({vol.Required(CONF_DEVICE): vol.In(self._options)}),
+            data_schema=vol.Schema(
+                {
+                    vol.Required(CONF_DEVICE): vol.In(self._options),
+                    vol.Optional(
+                        CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL
+                    ): int,
+                }
+            ),
             errors=errors,
         )
 
 
-class BadDevice(exceptions.HomeAssistantError):
+class InvalidSerialDevice(exceptions.HomeAssistantError):
     """Error to indicate we cannot read teleinfo from device."""
